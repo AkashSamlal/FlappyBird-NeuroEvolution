@@ -1,3 +1,4 @@
+let { Network, architect } = carrot;  
 class Bird {
     constructor() {
     this.y = height/2; 
@@ -6,7 +7,8 @@ class Bird {
     this.lift = -20; 
     this.velocity = 0;
     
-   this.brain = new NeuralNetwork(4, 4, 1); 
+    this.brain = new Network(4, 4, 1);  
+  //this.brain = new NeuralNetwork(4, 4, 1); 
 
     }
     show()  {
@@ -36,11 +38,17 @@ class Bird {
         inputs[2] = closest.bottom / height; 
         inputs[3] = closest.x / width; 
         
-        let output = this.brain.predict(inputs); 
-        if(output > 0.5) {
-            this.up(); 
-        }
-     }
+        let output = []; 
+        output = this.brain.activate(inputs); 
+        
+        
+        console.log(output); 
+        
+        for(let i = 0; i < 4; i++) {
+            if(output[i] > 0.5) 
+                this.up(); 
+         }
+    }
 
     update() {
         this.velocity += this.gravity; 
