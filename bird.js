@@ -13,12 +13,10 @@ class Bird {
     if(brain) {
         this.brain = brain.clone();
     } else {
-        this.brain = new Network(4, 4, 2);
+        this.brain = new Network(5, 8, 2);
     }
     
-      
-
-    }
+}
     show()  {
         stroke(255);
         fill(255, 50); 
@@ -37,7 +35,7 @@ class Bird {
         let closest = null;
         let closestD = Infinity; 
         for(let i = 0; i < pipes.length; i++) {
-            let d = pipes[i].x - this.x; 
+            let d = (pipes[i].x + pipes[i].w) - this.x; 
             if(d < closestD && d > 0) {
                 closest = pipes[i]; 
                 closestD = d; 
@@ -48,24 +46,19 @@ class Bird {
         inputs[0] = this.y / height; 
         inputs[1] = closest.top/height; 
         inputs[2] = closest.bottom / height; 
-        inputs[3] = closest.x / width; 
-        
-        //Toy -----------------------------------
-        // let out = this.brain.predict(inputs);
-        // console.log(out); 
-        // if(out > 0.5) 
-        // this.up(); 
-        // ----------------------------------------
-        console.log("Inputs: " + inputs[0]);          
-
+        inputs[3] = closest.x / width;
+        inputs[4] = this.velocity / 10; 
+           
         let output = this.brain.activate(inputs); 
-        
-        console.log("Predicts: " + output[0]); 
-        
+
            if(output[0] > output[1]) {
                 this.up(); 
            }
          
+    }
+
+    offscreen() {
+        return (this.y > height || this.y < 0); 
     }
 
     update() {
@@ -74,14 +67,6 @@ class Bird {
         this.velocity *= 0.9; 
         this.y += this.velocity;
 
-        if(this.y > height) {
-            this.y = height; 
-            this.velocity = 0; 
-        }
-
-        if(this.y < 0) {
-            this.y = 0; 
-           this.velocity = 0; 
-        }
+        
     }
 }

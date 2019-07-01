@@ -1,8 +1,6 @@
 function nextGeneration() {
 
 calculateFitness();
-
-
     for(let i = 0; i < TOTAL; i++) {
         birds[i] = pickOne(); 
     }
