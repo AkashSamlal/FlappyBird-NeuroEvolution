@@ -1,18 +1,27 @@
 let { Network, architect } = carrot;  
 class Bird {
-    constructor() {
+    constructor(brain) {
     this.y = height/2; 
     this.x = 64;
-    this.gravity = 0.6; 
-    this.lift = -20; 
+    this.gravity = 0.7; 
+    this.lift = -12; 
     this.velocity = 0;
+
+    this.score = 0; 
+    this.fitness = 0;
     
-    this.brain = new Network(4, 4, 1);  
-  //this.brain = new NeuralNetwork(4, 4, 1); 
+    if(brain) {
+        this.brain = brain.clone();
+    } else {
+        this.brain = new Network(4, 4, 2);
+    }
+    
+      
 
     }
     show()  {
-        fill(255); 
+        stroke(255);
+        fill(255, 50); 
         ellipse(this.x, this.y, 32, 32);
     }
 
@@ -20,6 +29,9 @@ class Bird {
         this.velocity += this.lift; 
      }
 
+     mutate() {
+         this.brain.mutate(0.1); 
+     }
      think(pipes)  {
 
         let closest = null;
@@ -38,19 +50,26 @@ class Bird {
         inputs[2] = closest.bottom / height; 
         inputs[3] = closest.x / width; 
         
-        let output = []; 
-        output = this.brain.activate(inputs); 
+        //Toy -----------------------------------
+        // let out = this.brain.predict(inputs);
+        // console.log(out); 
+        // if(out > 0.5) 
+        // this.up(); 
+        // ----------------------------------------
+        console.log("Inputs: " + inputs[0]);          
+
+        let output = this.brain.activate(inputs); 
         
+        console.log("Predicts: " + output[0]); 
         
-        console.log(output); 
-        
-        for(let i = 0; i < 4; i++) {
-            if(output[i] > 0.5) 
+           if(output[0] > output[1]) {
                 this.up(); 
-         }
+           }
+         
     }
 
     update() {
+        this.score++; 
         this.velocity += this.gravity; 
         this.velocity *= 0.9; 
         this.y += this.velocity;
