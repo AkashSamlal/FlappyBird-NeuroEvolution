@@ -6,14 +6,6 @@ let counter = 0;
 let cycles = 100; 
 let slider;
 
-function keyPressed() {
-  if(key === "s") {
-  let bird = birds[0]; 
-  let json = JSON.stringify(bird.brain); 
-  saveJSON(bird.brain, 'bird.json'); 
-  console.log(json);
-  }
-}
 
 function setup() {
   createCanvas(640, 480); 
@@ -76,3 +68,13 @@ for(let n = 0; n < slider.value(); n++) {
   }
 }
 
+
+
+/* function keyPressed() {
+  if(key === "s") {
+  let bird = birds[0]; 
+  let json = JSON.stringify(bird.brain); 
+  saveJSON(bird.brain, 'bird.json'); 
+  console.log(json);
+  }
+} */
