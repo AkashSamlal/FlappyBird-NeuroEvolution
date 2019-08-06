@@ -1,4 +1,4 @@
-# example.flappy-bird 
+# FlappyBird-NeuroEvolution 
 
 Click ([here]( https://akashsamlal.github.io/FlappyBird-NeuroEvolution/)) to play the Demo
 
