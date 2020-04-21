@@ -26,7 +26,7 @@ let Bird = function(brain) {
 
   // This is the key function now that decides
   // if it should jump or not jump!
-  this.think = function(ipes) {
+  this.think = function(pipes) {
     // First find the closest pipe
     let closest = null;
     let record = Infinity;
